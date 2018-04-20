@@ -2,6 +2,7 @@ from flask import Flask
 from flask import request, jsonify
 import re
 from json import loads
+import levenshtein
 
 from data import actions
 
@@ -9,7 +10,7 @@ from data import actions
 MAX_LEVINSHTEIN_DISTANCE = 4
 
 
-def levenshtein(s, t):
+def pylevenshtein(s, t):
     if s == t:
         return 0
     elif len(s) == 0:
@@ -28,6 +29,7 @@ def levenshtein(s, t):
         for j in range(len(v0)):
             v0[j] = v1[j]
 
+    print(levenshtein.distance(s, t))
     return v1[len(t)]
 
 
@@ -51,14 +53,14 @@ def get_data(message, request):
             min_dist = 1024
 
             for word in match_key.group(1).split('|'):
-                levenshtein_dist = levenshtein(message[i], word)
+                levenshtein_dist = pylevenshtein(message[i], word)
                 if levenshtein_dist < min_dist:
                     min_dist = levenshtein_dist
 
             dist += min_dist
             continue
 
-        dist += levenshtein(message[i], request[i])
+        dist += pylevenshtein(message[i], request[i])
 
     if dist < MAX_LEVINSHTEIN_DISTANCE:
         return data, dist
