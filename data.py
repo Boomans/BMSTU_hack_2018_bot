@@ -4,18 +4,19 @@ actions = [
             "action": "/account/accounts/id{account_id}/payment?money={money}",
             "message": "открыта страница пополнения счёта"
         },
+        "description": "пополнить счёт на <количество> рублей",
         "requests": [
             "пополнить [счёт|баланс] на {money} [рублей|руб]",
             "[внести|положить] на счёт {money} [рублей|руб]",
             "[внести|положить] {money} [рублей|руб] на счёт"
         ],
-        "description": "пополнить счёт на <количество> рублей"
     },
     {
         "response": {
             "action": "/account/accounts/id{account_id}/service?type=sms_notification&action=on",
             "message": "смс уведомлении подключены"
         },
+        "description": "Подключить смс уведомления",
         "requests": [
             "[включить|подключить] смс уведомления"
         ]
@@ -25,6 +26,7 @@ actions = [
             "action": "/account/accounts/id{account_id}/service?type=sms_notification&action=off",
             "message": "смс уведомлении отключены"
         },
+        "description": "Отключить смс уведомления",
         "requests": [
             "[выключить|отключить] смс уведомления",
         ]
@@ -32,8 +34,9 @@ actions = [
     {
         "response": {
             "action": "/account/accounts/id{account_id}/service?type=auto_refill&action=on",
-            "message": "смс уведомлении подключены"
+            "message": "автопоплнение отключено"
         },
+        "description": "Подключить автопополнение",
         "requests": [
             "[включить|подключить] автопополнение",
         ]
@@ -41,8 +44,9 @@ actions = [
     {
         "response": {
             "action": "/account/accounts/id{account_id}/service?type=auto_refill&action=off",
-            "message": "смс уведомлении отключены"
+            "message": "отключено автопополнение"
         },
+        "description": "Отключить автопополнение",
         "requests": [
             "[выключить|отключить] автопополнение",
         ]
@@ -50,8 +54,9 @@ actions = [
     {
         "response": {
             "action": "/account/cards/",
-            "message": "смс уведомлении отключены"
+            "message": "показан список карт"
         },
+        "description": "Показать список карт",
         "requests": [
             "показать список карт",
             "показать карты",
@@ -62,8 +67,9 @@ actions = [
     {
         "response": {
             "action": "/account/cards/id{number}",
-            "message": "смс уведомлении отключены"
+            "message": "информация о карте показана"
         },
+        "description": "Показать карту <номер карты>",
         "requests": [
             "показать карту {number}",
             "карта {number}"
@@ -72,8 +78,9 @@ actions = [
     {
         "response": {
             "action": "/account/accounts/",
-            "message": "смс уведомлении отключены"
+            "message": "счета показаны"
         },
+        "description": "Показать счета",
         "requests": [
             "показать список счетов",
             "показать счета",
@@ -84,8 +91,9 @@ actions = [
     {
         "response": {
             "action": "/account/accounts/id{number}",
-            "message": "смс уведомлении отключены"
+            "message": "показана информация о счете"
         },
+        "description": "Показать информацию о счете <номер счета>",
         "requests": [
             "показать счет {number}"
         ]
@@ -93,8 +101,9 @@ actions = [
     {
         "response": {
             "action": "/account/accounts/id{account_id}/service",
-            "message": "смс уведомлении отключены"
+            "message": "услуги показаны"
         },
+        "description": "Показать услуги",
         "requests": [
             "показать услуги"
         ]

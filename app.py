@@ -71,9 +71,10 @@ app = Flask(__name__)
 
 @app.route('/', methods=['GET'])
 def help():
-    response = ""
-    for action in actions:
-        pass
+    response = '\n'.join(map(lambda action: action['description'], actions ))
+    response = jsonify({'massage': response})
+    return response
+
 
 
 @app.route('/', methods=['POST'])
