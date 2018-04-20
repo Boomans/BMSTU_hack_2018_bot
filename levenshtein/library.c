@@ -1,12 +1,12 @@
 #include <stdio.h>
-#include <python3.6/Python.h>
+#include <Python.h>
 
 #define min(a,b) \
    ({ __typeof__ (a) _a = (a); \
        __typeof__ (b) _b = (b); \
      _a < _b ? _a : _b; })
 
-static PyObject* levenshtein_distance(PyObject* src, PyObject* dst) {
+static PyObject* distance(PyObject* src, PyObject* dst) {
     const size_t m = (size_t)PyUnicode_GetLength(src);
     const size_t n = (size_t)PyUnicode_GetLength(src);
     if (m == 0) {
@@ -47,11 +47,11 @@ static PyObject* levenshtein_distance(PyObject* src, PyObject* dst) {
 
 PyMethodDef SpamMethods[] =
         {
-                {"distance", (PyCFunction)levenshtein_distance, METH_VARARGS, 0},
+                {"distance", (PyCFunction)distance, METH_VARARGS, 0},
                 {0,0,0,0}
         };
 
-static struct PyModuleDef spammodule = {
+static struct PyModuleDef levmodule = {
         PyModuleDef_HEAD_INIT,
         "levenshtein",   /* name of module */
         "Ehh, hello modyle", /* module documentation, may be NULL */
@@ -63,5 +63,5 @@ static struct PyModuleDef spammodule = {
 PyMODINIT_FUNC
 PyInit_levenshtein(void)
 {
-    return PyModule_Create(&spammodule);
+    return PyModule_Create(&levmodule);
 }
