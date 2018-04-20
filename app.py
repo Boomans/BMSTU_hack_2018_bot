@@ -1,9 +1,11 @@
 from flask import Flask
 from flask import request, jsonify
+from flask_cors import CORS, cross_origin
 import re
 from json import loads
 
 from data import actions
+
 
 
 def split_actions(actions):
@@ -76,10 +78,11 @@ def get_data(message, request):
 
 app = Flask(__name__)
 
+cors = CORS(app, resources={r"*": {"origins": "*"}})
 
 @app.route('/', methods=['GET'])
 def help():
-    response = '\n'.join(map(lambda action: action['description'], actions ))
+    response = '<br>'.join(map(lambda action: action['description'], actions ))
     response = jsonify({'massage': response})
     return response
 
@@ -87,6 +90,7 @@ def help():
 
 @app.route('/', methods=['POST'])
 def bot():
+    print(request)
     message = request.form['message'].lower()
 
     meta_data = None
@@ -114,10 +118,12 @@ def bot():
                     key: value.format(**data) for key, value in action['response'].items()
                 })
     print(response_dist)
-
     if response:
         return response
-    return 'error\n'
+
+    response = '<br>'.join(map(lambda action: action['description'], actions ))
+    response = jsonify({"message": "Запрос хуйня<br>" + response})
+    return response
 
 
 if __name__ == '__main__':

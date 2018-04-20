@@ -1,7 +1,7 @@
 actions = [
     {
         "response": {
-            "action": "/account/accounts/id{account_id}/payment?money={money}",
+            "action": "/account/payment?money={money}&account={account_id}",
             "message": "открыта страница пополнения счёта"
         },
         "description": "пополнить счёт на <количество> рублей",
