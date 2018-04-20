@@ -2,7 +2,7 @@ from flask import Flask
 from flask import request, jsonify
 import re
 from json import loads
-import levenshtein
+# import levenshtein as lv
 
 from data import actions
 
@@ -29,7 +29,7 @@ def pylevenshtein(s, t):
         for j in range(len(v0)):
             v0[j] = v1[j]
 
-    print(levenshtein.distance(s, t))
+    # print(lv.distance(s, t))
     return v1[len(t)]
 
 
