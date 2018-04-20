@@ -6,6 +6,14 @@ from json import loads
 from data import actions
 
 
+def split_actions(actions):
+    for action in actions:
+        for index, action_request in enumerate(action['requests']):
+            action['requests'][index] = action_request.split()
+
+
+split_actions(actions)
+
 MAX_LEVINSHTEIN_DISTANCE = 4
 
 
@@ -92,7 +100,7 @@ def bot():
 
     for action in actions:
         for action_request in action['requests']:
-            data = get_data(message_split, action_request.split())
+            data = get_data(message_split, action_request)
             if not data:
                 continue
 
@@ -113,4 +121,5 @@ def bot():
 
 
 if __name__ == '__main__':
+
     app.run()
