@@ -1,6 +1,7 @@
 from flask import Flask
 from flask import request, jsonify
 import re
+from json import loads
 
 from data import actions
 
@@ -9,7 +10,6 @@ MAX_LEVINSHTEIN_DISTANCE = 4
 
 
 def levenshtein(s, t):
-    ''' From Wikipedia article; Iterative with two matrix rows. '''
     if s == t:
         return 0
     elif len(s) == 0:
@@ -44,8 +44,21 @@ def get_data(message, request):
         match_key = re.match(r'{(\w+)}', request[i])
         if match_key:
             data[match_key.group(1)] = message[i]
-        else:
-            dist += levenshtein(message[i], request[i])
+            continue
+
+        match_key = re.match(r'\[(.+)\]', request[i])
+        if match_key:
+            min_dist = 1024
+
+            for word in match_key.group(1).split('|'):
+                levenshtein_dist = levenshtein(message[i], word)
+                if levenshtein_dist < min_dist:
+                    min_dist = levenshtein_dist
+
+            dist += min_dist
+            continue
+
+        dist += levenshtein(message[i], request[i])
 
     if dist < MAX_LEVINSHTEIN_DISTANCE:
         return data, dist
@@ -56,9 +69,21 @@ def get_data(message, request):
 app = Flask(__name__)
 
 
+@app.route('/', methods=['GET'])
+def help():
+    response = ""
+    for action in actions:
+        pass
+
+
 @app.route('/', methods=['POST'])
-def hello_world():
-    message = request.form['message']
+def bot():
+    message = request.form['message'].lower()
+
+    meta_data = None
+    if request.form.get('meta_data'):
+        meta_data = loads(request.form['meta_data'])
+
     message_split = message.split()
 
     response_dist = 1024
@@ -73,6 +98,9 @@ def hello_world():
             data, dist = data
             if dist < response_dist:
                 response_dist = dist
+
+                if meta_data:
+                    data.update(meta_data)
                 response = jsonify({
                     key: value.format(**data) for key, value in action['response'].items()
                 })
