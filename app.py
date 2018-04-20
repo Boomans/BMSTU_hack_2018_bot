@@ -122,7 +122,7 @@ def bot():
         return response
 
     response = '<br>'.join(map(lambda action: action['description'], actions ))
-    response = jsonify({"message": "Запрос хуйня<br>" + response})
+    response = jsonify({"message": "Запрос @#$%^&*<br>" + response})
     return response
 
 
