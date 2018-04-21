@@ -2,9 +2,8 @@ from flask import Flask
 from flask import request, jsonify
 from flask_cors import CORS, cross_origin
 import re
-from json import loads
-# import levenshtein as lv
-
+from json import loads, dumps
+import datetime
 from data import actions
 
 
@@ -39,7 +38,6 @@ def pylevenshtein(s, t):
         for j in range(len(v0)):
             v0[j] = v1[j]
 
-    # print(lv.distance(s, t))
     return v1[len(t)]
 
 
@@ -92,7 +90,6 @@ def help():
 
 @app.route('/', methods=['POST'])
 def bot():
-    # print("MESSAGE", request.form['message'])
     message = request.form['message'].lower()
 
     meta_data = None
@@ -119,7 +116,10 @@ def bot():
                 response = jsonify({
                     key: value.format(**data) for key, value in action['response'].items()
                 })
-    print(response_dist)
+
+    with open('chat_bot.log', 'a') as log:
+        log.write("DATE\t" + str(datetime.datetime.now()) + "\tMESSAGE\t" + request.form['message'].lower() + "\tDISTANSE\t" + str(response_dist) + "\n")
+
     if response:
         return response
 
