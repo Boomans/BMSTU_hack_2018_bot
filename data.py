@@ -34,7 +34,7 @@ actions = [
     {
         "response": {
             "action": "/account/accounts/id{account_id}/service?type=auto_refill&action=on",
-            "message": "автопоплнение подключено"
+            "message": "автопополнение подключено"
         },
         "description": "Подключить автопополнение",
         "requests": [
