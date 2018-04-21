@@ -92,7 +92,7 @@ def help():
 
 @app.route('/', methods=['POST'])
 def bot():
-    print(request)
+    # print("MESSAGE", request.form['message'])
     message = request.form['message'].lower()
 
     meta_data = None
