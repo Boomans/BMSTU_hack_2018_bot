@@ -83,7 +83,7 @@ cors = CORS(app, resources={r"*": {"origins": "*"}})
 @app.route('/', methods=['GET'])
 def help():
     response = '<br>'.join(map(lambda action: action['description'], actions ))
-    response = jsonify({'massage': response})
+    response = jsonify({'message': response})
     return response
 
 
